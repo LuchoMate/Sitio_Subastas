@@ -3,4 +3,4 @@
 Log con usuario foo 
 pass: user1729
 
-Un sitio de subastas tipo eBay
+Un sitio de subastas tipo eBay usando django con modelos
