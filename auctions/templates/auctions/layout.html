@@ -1,0 +1,68 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>{% block title %}cs50Bay{% endblock %}</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+        <link href="{% static 'auctions/styles.css' %}" rel="stylesheet">
+    </head>
+    <body>
+        <header>
+            <div class="centerbanner">
+                <img src="{% static 'auctions/images/ai.png' %}" alt="Auction" style="width: 100px; height: auto; background: transparent;"> 
+                <!-- Icon credits: https://www.flaticon.com-->
+                <h1> <span style="color: red;">cs50</span><span style="color: MediumBlue;">b</span><span style="color: Yellow;">a</span><span style="color: #2E8B57;">y</span>  </h1>
+                <br>
+                <h6 style="color: Teal; font-style: italic;">"For the person who has everything, we have everything else."</h6>
+            </div>
+            <div class="commentline"></div>
+            <br>
+
+            
+            <div>
+                {% if user.is_authenticated %}
+                    <div class="commentbox" style="width: max-content; margin: auto;">Signed in as <strong>{{ user.username }} </strong> -- Member since: {{user.member_since}}.</div>
+                    
+                {% else %}
+                    You are currently browsing as Guest.
+                    <br>
+                {% endif %}
+                <br>
+            </div>
+            <div >
+                <ul class="nav container" style="justify-content: center;">
+                    <li class="nav-item navbox">
+                        <a class="nav-link" href="{% url 'index' %}">Active Listings</a>
+                    </li>
+                    <li class="nav-item navbox">
+                        <a class="nav-link" href="{% url 'all_categories'%}">Browse by category</a>
+                    </li>
+                    {% if user.is_authenticated %}
+                        <li class="nav-item navbox">
+                            <a class="nav-link" href="{% url 'new_listing'%}">Create a new listing</a>
+                        </li>
+                        <li class="nav-item navbox">
+                            <a class="nav-link" href="{% url 'my_watchlist' %}">My Watchlist</a>
+                        </li>
+                        <li class="nav-item navboxlogout">
+                            <a class="nav-link" href="{% url 'logout' %}">Log Out</a>
+                        </li>
+                    {% else %}
+                        <li class="nav-item navboxlogin">
+                            <a class="nav-link" href="{% url 'login' %}">Log In</a>
+                        </li>
+                        <li class="nav-item navboxlogin">
+                            <a class="nav-link" href="{% url 'register' %}">Register</a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </header>
+        <hr>
+        <main>
+            {% block body %}
+            {% endblock %}
+        </main>
+    </body>
+</html>

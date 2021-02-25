@@ -1,0 +1,34 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+    
+    {% if categorylist%}
+        <h2 class="maintitle"> Now browsing category: {{categorytitle}}</h2>
+        <br>
+
+        <div class="container">
+
+        {% for listing in categorylist %}
+
+            <div class="card cardstyle" style="text-align: center;">
+                <img class="card-img-top" src="{{listing.img_url}}" alt="" style="height: 200px;">
+                    <div class="card-body">
+                        <h5 class="card-title">{{listing.title}}</h5>
+                        <p class="card-text"><span style="font-style: italic;">{{listing.description |truncatechars:100}}</span> <br>
+                                <h1 style="color: black">$ <strong> {{ id_and_bid | get_bid:listing.id }} </strong></h1>
+                        </p>
+                        <a href="{% url 'listing' listing.id %}" class="btn btn-primary">Start bidding!</a>
+                    </div>
+            </div>
+            
+        {% endfor%}
+
+        </div>
+
+    {% else%}
+
+        <h2 class="maintitle"> No active listings in this category.</h2>
+        
+    {% endif %}
+
+{% endblock%}

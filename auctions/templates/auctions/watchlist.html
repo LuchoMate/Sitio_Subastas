@@ -1,0 +1,33 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+
+<h2 class="maintitle">My watchlist ({{id_and_bid |length}})</h2>
+
+<br>
+
+<div>
+
+{% for listing in userwatchlist%}
+    <a href="{% url 'listing' listing.id %}" class="watchlistitem">
+        <div class="cardstyle" style="margin: auto;">
+            <img src="{{listing.img_url}}" alt="" style="height: 30px;">
+            <strong>{{listing.title}}</strong> ----  $ {{ id_and_bid | get_bid:listing.id }}
+        </div>
+    </a>
+    <br>
+    {% empty %}
+        <br>
+        <div style="margin: auto; text-align: center;"><img src="../static/auctions/images/empty.png" alt="" style="height: 100px;"></div>
+        
+        <div class="maintitle">
+            <br>
+            Your watchlist is empty !
+            <br>
+        </div>
+
+{% endfor %}
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,182 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+
+<h1 class="maintitle">{{listing.title}}</h1>
+<br>
+
+{% if messages %}    
+        {% for message in messages %}
+            {% if 'success' in message.tags %}
+                <ul class="alert alert-success" style="list-style: none;">
+                    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                </ul>
+            {% else%}
+                <ul class="alert alert-danger" style="list-style: none;">
+                    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                </ul>
+            {% endif %}
+        {% endfor %}   
+{% endif %}
+
+<div class="container">
+
+    <div class="card cardstyle" style="text-align: center;">
+        <img class="card-img-top" src="{{listing.img_url}}" alt="">
+        <div class="card-body">
+            <h6 class="maintitle">Highest bid so far:</h6>
+            <h1 style="color: black">$ <strong>{{current_bid.highest_bid}}</strong> </h1></p>
+            Bid placed on: {{current_bid.last_bid_date}} by user <strong>{{ current_bid.highest_bid_user }}</strong>
+        </div>
+    </div>
+
+    <div class="card cardstyle">
+        <div class="card-body">
+          <h5 class="maintitle">Listing posted by: </h5> {{listing.author}}
+          <h5 class="maintitle">Starting bid: </h5> $ {{listing.starting_bid}}
+          <h5 class="maintitle">Creation date: </h5> {{listing.creation_date}}
+          <h5 class="maintitle">Category: </h5> {{category}}
+          <h5 class="maintitle">Full description: </h5> {{listing.description}}
+
+        </div>
+    </div>
+
+    <div class="card cardstyle">
+        <div class="card-body">
+            {% if user.is_authenticated %}
+                {% if user.username == listing.author%}
+                    {% if listing.active_status%}
+                    <form action="{% url 'close_bid' listing.id %}" method="POST">
+                        {% csrf_token %}
+                        <input type="submit" class="btn btn-danger" value="Close this auction">
+                    </form>
+                    {% else%}
+                    <h3 class="maintitle" style="color: orangered;">- Auction closed -</h3>
+                    {% endif %}
+                
+                {% else %} 
+                <!-- -->
+                    {% if listing.active_status%}
+
+                        <div>
+                            <a id="hide1" href="#hide1" class="hide"><button type="button" class="btn btn-success">Place your bid here !</button></a>
+                            <a id="show1" href="#show1" class="show"><button type="button" class="btn btn-success">Place your bid here !</button></a>
+                            <div class="details">
+                                <form action="{% url 'new_bid' listing.id %}" method="POST">
+                                    {% csrf_token %}  
+                                    {{bidform}}
+                                    <input type="submit" value="Bid!">
+                                </form> 
+                            </div>
+                        </div>
+
+                    
+                        <br>
+                        <h5 class="maintitle"> or </h5>
+                        <br>
+                        {% if usertocheck %}
+                            <form action="{% url 'remove_watchlist' listing.id %}" method="POST">
+                                {% csrf_token %}
+                                <input type="submit" class="btn btn-danger" value="Remove from Watchlist">
+                            </form> 
+                        {% else %}
+                            <form action="{% url 'add_watchlist' listing.id %}" method="POST">
+                                {% csrf_token %}
+                                <input type="submit" class="btn btn-primary" value="Add to Watchlist">
+                            </form>
+                        {% endif %}
+                            
+
+
+                    {% else %}
+                        
+                        <!-- winner-->
+                        {% if user.username == current_bid.highest_bid_user%}
+                            <img src="../static/auctions/images/congrats.gif" alt="" style="height: 150px;">
+                            <h3 class="maintitle" style="color: gold;">Congratulations !!</h3>
+                            <br>
+                            <h5 class="maintitle">You won this auction !!</h5>
+                            <h6>Get in touch with user: <strong>{{listing.author}}</strong> to coordinate details.</h6>
+                            <br>
+                            <img src="../static/auctions/images/congrats.gif" alt="" style="height: 150px;">
+                        {% else %}
+                            <h3 class="maintitle" style="color:orangered;">- Auction closed -</h3>
+                        {% endif %}
+                    {% endif %}
+                
+                    
+                {% endif %}
+
+            {% else %}
+
+            <a href="{% url 'login' %}" ><button type="button" class="btn btn-primary" style="color: white;">Log in</button></a>
+
+            to place bids or add items to your watchlist !
+
+            {% endif %}
+
+
+        </div>
+    </div>
+
+</div>
+
+<hr>
+
+<h4 class="maintitle">Comments on this listing:</h4>
+<hr>
+
+
+{% for post in comments_list %}
+    <div class="commentbox">
+        {% if post.post_author == listing.author %}
+            <span style="color: white;">[Author]</span> <img src="../static/auctions/images/crown.png" alt="" style="height: 25px;">
+        {% endif %}
+        Posted by <strong>{{post.post_author}}</strong> on {{post.commentary_date}}
+        <br>
+        <div class="commentline"></div>
+        <br>
+
+        {{post.comment}}
+    </div>
+    <hr>
+
+{% endfor %}
+
+
+<br>
+
+
+{% if user.is_authenticated %}
+    {% if listing.active_status %}
+    <div class="cardstyle" style="width: 30rem; margin:auto">
+
+        <br>
+        <h6 class="maintitle"> Add your comment here!</h6>
+        <br>
+        <form action="{% url 'new_comment' listing.id %}" method="POST">
+            {% csrf_token %}
+            {{comment}}
+            <br><br>          
+            <div class="maintitle"><input type="submit" class="btn btn-primary mb-2" value="Post!"/></div> 
+        </form>
+
+    </div>
+    {% else %}
+        <h5 class="maintitle">This listing is closed. Comments are disabled.</h5>
+    {% endif %}
+      
+
+{% else %}
+
+<div style="margin: auto; text-align: center;">
+
+    <a href="{% url 'login' %}" ><button type="button" class="btn btn-primary" style="color: white;">Log in</button></a>
+    to post and communicate with other bidders !
+
+</div>
+
+{% endif %}
+
+
+{% endblock %}

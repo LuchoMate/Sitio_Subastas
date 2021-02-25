@@ -1,0 +1,89 @@
+{% extends "auctions/layout.html" %}
+{% load static %} <!--for some reason doesnt load from layout extend-->
+
+{% block body %}
+
+<h2 class="maintitle">Categories</h2>
+
+<br><br>
+
+<div class="container">
+
+    <a href="{% url 'category_branch' 'FA' %}" class="watchlistitem">
+        <div class="cardstyle margincategory">
+            <img src="{% static 'auctions/images/fashion.png' %}" alt="#" style="height: 70px;">
+            <strong class="maintitle">Fashion</strong>
+        </div>
+    </a>
+
+    <a href="{% url 'category_branch' 'BM' %}" class="watchlistitem">
+        <div class="cardstyle margincategory">
+            <img src="{% static 'auctions/images/book.png' %}" alt="#" style="height: 70px;">
+            <strong class="maintitle">Books, Movies & Music</strong>
+        </div>
+    </a>
+
+    <a href="{% url 'category_branch' 'EL' %}" class="watchlistitem">
+        <div class="cardstyle margincategory">
+            <img src="{% static 'auctions/images/electronics.png' %}" alt="#" style="height: 70px;">
+            <strong class="maintitle">Electronics</strong>
+        </div>
+    </a>
+
+    <a href="{% url 'category_branch' 'CO' %}" class="watchlistitem">
+        <div class="cardstyle margincategory">
+            <img src="{% static 'auctions/images/collectible.png' %}" alt="#" style="height: 70px;">
+            <strong class="maintitle">Collectibles & Art</strong>
+        </div>
+    </a>
+
+    <a href="{% url 'category_branch' 'HG' %}" class="watchlistitem">
+        <div class="cardstyle margincategory">
+            <img src="{% static 'auctions/images/home.png' %}" alt="#" style="height: 70px;">
+            <strong class="maintitle">Home & Garden</strong>
+        </div>
+    </a>
+
+    <a href="{% url 'category_branch' 'SG' %}" class="watchlistitem">
+        <div class="cardstyle margincategory">
+            <img src="{% static 'auctions/images/sporting.png' %}" alt="#" style="height: 70px;">
+            <strong class="maintitle">Sporting Goods</strong>
+        </div>
+    </a>
+
+    <a href="{% url 'category_branch' 'TH' %}" class="watchlistitem">
+        <div class="cardstyle margincategory">
+            <img src="{% static 'auctions/images/toys.png' %}" alt="#" style="height: 70px;">
+            <strong class="maintitle">Toys & Hobbies</strong>
+        </div>
+    </a>
+
+    <a href="{% url 'category_branch' 'BI' %}" class="watchlistitem">
+        <div class="cardstyle margincategory">
+            <img src="{% static 'auctions/images/business.png' %}" alt="#" style="height: 70px;">
+            <strong class="maintitle">Business & Industrial</strong>
+        </div>
+    </a>
+
+    <a href="{% url 'category_branch' 'HB' %}" class="watchlistitem">
+        <div class="cardstyle margincategory">
+            <img src="{% static 'auctions/images/health.png' %}" alt="#" style="height: 70px;">
+            <strong class="maintitle">Health & Beauty</strong>
+        </div>
+    </a>
+
+    <a href="{% url 'category_branch' 'OT' %}" class="watchlistitem">
+        <div class="cardstyle margincategory">
+            <img src="{% static 'auctions/images/others.png' %}" alt="#" style="height: 70px;">
+            <strong class="maintitle">Others</strong>
+        </div>
+    </a>
+
+</div>
+
+
+
+
+
+
+{% endblock %}

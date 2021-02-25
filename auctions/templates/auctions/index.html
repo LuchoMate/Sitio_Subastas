@@ -1,0 +1,38 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+    <h1 class="maintitle">All Active Listings</h1>
+    <br>
+    {% if messages %}    
+        {% for message in messages %}
+            {% if 'success' in message.tags %}
+                <ul class="alert alert-success" style="list-style: none;">
+                    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                </ul>            
+            {% endif %}
+        {% endfor %}   
+    {% endif %}
+    <br>
+    <div class="container">
+        
+
+    {% for listing in active_listings %}
+            
+            
+        <div class="card cardstyle" style="text-align: center;">
+            <img class="card-img-top" src="{{listing.img_url}}" alt="" style="height: 200px;">
+                <div class="card-body">
+                    <h5 class="card-title">{{listing.title}}</h5>
+                    <p class="card-text"><span style="font-style: italic;">{{listing.description |truncatechars:100}}</span> <br>
+                            <h1 style="color: black">$ <strong> {{ id_and_bid | get_bid:listing.id }} </strong></h1>
+                    </p>
+                    <a href="{% url 'listing' listing.id %}" class="btn btn-primary">Start bidding!</a>
+                </div>
+        </div>
+           
+
+        
+    {% endfor%}
+    </div>
+
+{% endblock %}

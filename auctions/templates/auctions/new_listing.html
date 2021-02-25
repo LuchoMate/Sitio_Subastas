@@ -1,0 +1,40 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+
+{% if user.is_authenticated %}
+
+    <h2 class="maintitle">Create your new listing here!</h2>
+    <br><br>
+    <div class="cardstyle" style="width: 50rem; margin:auto">
+        <form action="{% url 'new_listing' %}" method="POST">
+
+            {% csrf_token %}
+
+            {% for field in listingform %}
+            <div>
+                <p class="maintitle">{{field.label_tag}}</p>
+                <p class="maintitle">{{field}} {% if field.help_text %} <span style="font-size:small; color: black">{{field.help_text}}</span>{% endif%}</p>
+
+            </div>
+
+            {% endfor %}
+            <br>           
+        
+            <div class="maintitle"><input type="submit" class="btn btn-primary mb-2" value="Auction!"/></div>           
+
+        </form>
+    </div>
+    
+
+{% else %}
+<a href="{% url 'login' %}" ><button type="button" class="btn btn-primary" style="color: white;">Log in</button></a>
+
+to start auctioning or placing bids !
+
+{% endif %}
+
+
+
+
+{% endblock %}
