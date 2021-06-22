@@ -5,6 +5,6 @@ pass: user1729
 
 Un sitio de subastas tipo eBay usando django y solo html
 
-Ingresar a la consola y en la carpeta root ingresar:
+En la consola dirigirse a la carpeta root e ingresar:
 
 > python manage.py runserver
